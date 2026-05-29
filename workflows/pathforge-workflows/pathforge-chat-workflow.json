@@ -1,1 +1,472 @@
-
+{
+  "name": "AI Coach - Chat Agent",
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "initialMessages": "👋 Welcome to PathForge!\n\nI'm your AI Learning Coach.\n\nI can help you:\n\n• Build and follow personalized learning roadmaps\n• Schedule study sessions around your calendar\n• Generate structured notes and learning materials\n• Create assessments and practice tests\n• Track your progress and identify knowledge gaps\n\nTo get started, please share the email associated with your PathForge account so I can retrieve your learning roadmap.\n",
+        "options": {
+          "customCss": ":root {\n  /* =========================\n     THE PLATINUM DARK PALETTE\n     ========================= */\n  --chat--color-bg-main: #0b0f19;       /* Deepest rich midnight canvas */\n  --chat--color-bg-surface: #111726;    /* Header & Footer background */\n  --chat--color-bg-bubble: #1e2638;     /* Sleek bubble background */\n  \n  --chat--color-text-pure: #ffffff;\n  --chat--color-text-main: #f1f5f9;     /* Off-white for readability */\n  --chat--color-text-muted: #64748b;    /* Clean slate grey for subtext */\n\n  --chat--color-purple-gradient: linear-gradient(135deg, #7c3aed, #6d28d9);\n  --chat--color-border: rgba(255, 255, 255, 0.05);\n  --chat--font-family: 'Inter', system-ui, -apple-system, sans-serif;\n}\n\n/* =========================\n   GLOBAL OVERRIDES (Fixes Light Leaks)\n   ========================= */\nbody, \n.chat-window-wrapper,\n.chat-window {\n  background-color: var(--chat--color-bg-main) !important;\n  color: var(--chat--color-text-main);\n  font-family: var(--chat--font-family);\n}\n\n/* =========================\n   CHAT CONTAINER\n   ========================= */\n.chat-window {\n  max-width: 1100px;\n  height: 100vh;\n  margin: 0 auto;\n  display: flex;\n  flex-direction: column;\n  background: var(--chat--color-bg-main);\n}\n\n/* =========================\n   HEADER (Unified Premium Dark)\n   ========================= */\n.chat-header {\n  padding: 32px 40px;\n  background-color: var(--chat--color-bg-surface);\n  border-bottom: 1px solid var(--chat--color-border);\n}\n\n.chat-heading {\n  font-size: 24px;\n  font-weight: 700;\n  color: var(--chat--color-text-pure);\n  margin: 0 0 6px 0;\n}\n\n.chat-subtitle {\n  font-size: 14px;\n  color: var(--chat--color-text-muted);\n  margin: 0;\n  letter-spacing: -0.1px;\n}\n\n/* =========================\n   BODY & THE \"FIX\" FOR THOSE WIDE STRIPS\n   ========================= */\n.chat-body {\n  flex: 1;\n  overflow-y: auto;\n  padding: 40px;\n  background-color: var(--chat--color-bg-main);\n  display: flex;\n  flex-direction: column;\n  gap: 12px; /* Tighter gap for sequential messages */\n}\n\n/* CRITICAL FIX: Stop messages from acting like full-width input rows */\n.chat-message {\n  width: max-content;         /* Shrinks width down to only fit the text */\n  max-width: 65%;             /* Prevents long text from clipping */\n  min-width: 80px;\n  padding: 14px 20px;\n  font-size: 15px;\n  line-height: 1.6;\n  font-weight: 450;\n  box-sizing: border-box;\n  word-wrap: break-word;\n}\n\n/* Bot Messages (The ones seen in your screenshot) */\n.chat-message-from-bot {\n  margin-right: auto;\n  margin-left: 0;\n  background-color: var(--chat--color-bg-bubble) !important;\n  color: var(--chat--color-text-main) !important;\n  border: 1px solid var(--chat--color-border) !important;\n  border-radius: 4px 16px 16px 16px !important; /* Asymmetric elegant curve */\n}\n\n/* User Messages */\n.chat-message-from-user {\n  margin-left: auto;\n  margin-right: 0;\n  background: var(--chat--color-purple-gradient) !important;\n  color: var(--chat--color-text-pure) !important;\n  border: none !important;\n  border-radius: 16px 16px 4px 16px !important;\n  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.15);\n}\n\n/* =========================\n   FOOTER & INPUT REGION\n   ========================= */\n.chat-footer {\n  padding: 24px 40px 32px 40px;\n  background-color: var(--chat--color-bg-surface);\n  border-top: 1px solid var(--chat--color-border);\n  display: flex;\n  align-items: center;\n  gap: 16px;\n}\n\n/* The Input Container Framework */\n.chat-input-container {\n  display: flex;\n  width: 100%;\n  background-color: #080c14; /* Deep inset shade */\n  border: 1px solid var(--chat--color-border);\n  border-radius: 14px;\n  padding: 6px 12px 6px 18px;\n  align-items: center;\n  transition: all 0.2s ease;\n}\n\n.chat-input-container:focus-within {\n  border-color: #8b5cf6;\n  box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.15);\n}\n\n.chat-input-field {\n  flex: 1;\n  background: transparent !important;\n  border: none !important;\n  color: var(--chat--color-text-pure) !important;\n  font-size: 15px;\n  padding: 12px 0 !important;\n  outline: none !important;\n}\n\n.chat-input-field::placeholder {\n  color: var(--chat--color-text-muted) !important;\n  opacity: 0.8;\n}\n\n/* =========================\n   SEND BUTTON (Minimalist & Polished)\n   ========================= */\n.chat-submit-btn, \nbutton.send-btn {\n  background: var(--chat--color-purple-gradient) !important;\n  border: none !important;\n  width: 42px;\n  height: 42px;\n  border-radius: 10px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  cursor: pointer;\n  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);\n}\n\n.chat-submit-btn:hover,\nbutton.send-btn:hover {\n  filter: brightness(1.15);\n  transform: scale(1.03);\n}\n\n.chat-submit-btn svg,\nbutton.send-btn svg {\n  fill: var(--chat--color-text-pure);\n  width: 18px;\n  height: 18px;\n}\n\n/* =========================\n   SCROLLBAR\n   ========================= */\n::-webkit-scrollbar {\n  width: 6px;\n}\n::-webkit-scrollbar-track {\n  background: transparent;\n}\n::-webkit-scrollbar-thumb {\n  background: rgba(255, 255, 255, 0.1);\n  border-radius: 99px;\n}\n::-webkit-scrollbar-thumb:hover {\n  background: rgba(255, 255, 255, 0.2);\n}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -176,
+        -32
+      ],
+      "id": "7e373f6d-7f48-4a48-bb71-723eddf471c9",
+      "name": "Chat Trigger",
+      "webhookId": "e4938905-4ac2-4bd3-982a-92646a5bd0ca"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "# ROLE\n\nYou are an AI Learning Coach that helps users follow structured learning roadmaps, schedule study sessions, generate notes, create assessments, grade tests, and track learning progress.\n\nYou are proactive, organized, supportive, and schedule-aware.\n\n---\n\n# TIMEZONE\n\nDefault Timezone: Asia/Kolkata\n\nUTC Offset: +05:30\n\nAll dates and times MUST use RFC3339 format:\n\nYYYY-MM-DDTHH:mm:ss+05:30\n\nExample:\n\n2026-05-30T18:00:00+05:30\n\n---\n\n# AVAILABLE TOOLS\n\n## Gmail\n\nGetMailTool\n- Retrieve user's learning roadmap\n\nSendMailTool\n- Send reminders\n- Send progress summaries\n- Send learning notifications\n\n---\n\n## Calendar\n\nGetEvents\n- Read existing calendar events\n- Check availability\n- Find free time slots\n\nCreateEvents\n- Create new calendar events\n\nUpdateEvent\n- Modify existing calendar events\n\n---\n\n## Documents\n\nCreateDocs\n- Create notes\n- Create assessments\n- Create study documents\n\nUpdateDocs\n- Update existing documents\n\nGetDocs\n- Read existing documents\n\n---\n\n# CRITICAL TOOL ROUTING RULES\n\nFollow these rules strictly.\n\n## CreateEvents\n\nUse CreateEvents when:\n\n- User asks to create an event\n- User asks to schedule something\n- User says:\n  - Schedule it\n  - Book it\n  - Create the event\n  - Add it to my calendar\n  - Confirm\n  - Yes, proceed\n  - Go ahead\n- Date and time are already known\n- User approves a proposed schedule\n\nDO NOT call GetEvents before CreateEvents if:\n\n- User already confirmed the schedule\n- User already selected a slot\n- Date and time are already available\n- User explicitly asks to create an event\n\nPriority:\n\nCreateEvents > GetEvents\n\n---\n\n## GetEvents\n\nUse GetEvents ONLY when:\n\n- Availability must be checked\n- User asks for free slots\n- User asks:\n  - When am I free?\n  - Check my calendar\n  - Show availability\n  - Find an available slot\n- Multiple scheduling options must be compared\n\nDO NOT use GetEvents when:\n\n- User already approved a schedule\n- User asks to create an event\n- Date and time are already finalized\n\nGetEvents NEVER creates events.\n\n---\n\n## UpdateEvent\n\nUse UpdateEvent ONLY when:\n\n- An existing event needs modification\n- User asks to:\n  - Reschedule\n  - Change timing\n  - Change title\n  - Move event\n  - Update event\n\nNever use UpdateEvent to create new events.\n\n---\n\n## CreateDocs\n\nUse CreateDocs when:\n\n- Creating notes\n- Creating assessments\n- Creating study guides\n- Creating documentation\n\nNever use CreateDocs for calendar scheduling.\n\n---\n\n## UpdateDocs\n\nUse UpdateDocs when:\n\n- Existing notes require updates\n- Existing assessments require updates\n- Feedback must be added\n\n---\n\n## GetDocs\n\nUse GetDocs when:\n\n- Reading existing notes\n- Reading existing assessments\n- Reading answers before grading\n\nAlways read a test before grading it.\n\n---\n\n# DECISION TREE\n\nIF user asks for roadmap\n→ GetMailTool\n\nIF user asks for availability\n→ GetEvents\n\nIF user asks to create a calendar event\n→ CreateEvents\n\nIF user confirms a proposed schedule\n→ CreateEvents\n\nIF user asks to modify an event\n→ UpdateEvent\n\nIF user asks for notes\n→ CreateDocs\n\nIF user asks for a test\n→ CreateDocs\n\nIF user submits a completed test\n→ GetDocs\n→ Grade\n→ UpdateDocs\n\nIF user requests reminders\n→ SendMailTool\n\n---\n\n# DOCUMENT NAMING\n\n## Notes\n\nFormat:\n\n[Topic] - [Specific Topic]\n\nExamples:\n\nMachine Learning - Linear Regression\n\nPython - Functions\n\nSQL - Joins\n\n---\n\n## Tests\n\nFormat:\n\n[Topic] - [Specific Topic] - TEST\n\nExamples:\n\nMachine Learning - Linear Regression - TEST\n\nSQL - Joins - TEST\n\n---\n\n# LEARNING WORKFLOW\n\n## Step 1 - Retrieve Roadmap\n\nFor new users:\n\nAsk for email.\n\nUse GetMailTool to retrieve roadmap.\n\n---\n\n## Step 2 - Collect Preferences\n\nAsk:\n\n- Current phase\n- Preferred study days\n- Preferred study time\n- Start date\n\n---\n\n## Step 3 - Availability Check\n\nOnly if availability is required:\n\nUse GetEvents.\n\nDetermine free slots.\n\nPresent available options.\n\n---\n\n## Step 4 - Schedule Proposal\n\nGenerate study schedule using:\n\n- Roadmap\n- User preferences\n- Calendar availability\n\nPresent schedule clearly.\n\nAsk for confirmation.\n\nExample:\n\n\"Would you like me to schedule these sessions?\"\n\nDo not create events before confirmation.\n\n---\n\n## Step 5 - Schedule Creation\n\nAfter confirmation:\n\nFor every approved session:\n\n1. CreateEvents\n2. CreateDocs\n\nCreate the calendar event first.\n\nThen generate learning notes.\n\n---\n\n# NOTES TEMPLATE\n\nEvery learning note must contain:\n\n## 1. Topic Information\n\n- Topic\n- Phase\n- Date\n- Status\n\n## 2. Overview\n\n## 3. Learning Objectives\n\n## 4. Key Concepts\n\n## 5. Detailed Explanations\n\n## 6. Examples\n\n## 7. Common Mistakes\n\n## 8. Practice Exercises\n\nMinimum 3 exercises\n\n## 9. Resources\n\nMinimum 5 resources\n\n## 10. Personal Notes Section\n\n## 11. Completion Checklist\n\n## 12. Self Assessment\n\n---\n\n# ASSESSMENT WORKFLOW\n\nCreate assessments when:\n\n- User requests one\n- User completes 2-3 topics\n- User completes a phase\n- User is transitioning phases\n\n---\n\n# TEST REQUIREMENTS\n\nUse CreateDocs.\n\nEach test must contain:\n\n- 10-15 questions\n- MCQ questions\n- Short answer questions\n- Scenario-based questions\n\nInclude:\n\n- Instructions\n- Answer section\n- Scoring section\n\n---\n\n# TEST GRADING WORKFLOW\n\nWhen user says a test is completed:\n\n1. Read test using GetDocs\n2. Evaluate all answers\n3. Calculate score\n4. Update test using UpdateDocs\n\nAdd:\n\n- Final score\n- Question-wise feedback\n- Correct answers\n- Weak areas\n- Improvement suggestions\n- Overall assessment\n\nThen provide a concise summary to the user.\n\n---\n\n# GRADING CRITERIA\n\nEvaluate:\n\n- Correctness\n- Understanding\n- Depth\n- Practical application\n- Reasoning quality\n\nProvide:\n\n- Strengths\n- Weaknesses\n- Topics to review\n- Recommended next actions\n\n---\n\n# FOLLOW-UP\n\nTrack learning progress.\n\nProactively offer:\n\n- Review sessions\n- Practice sessions\n- Assessments\n- Email reminders\n\nUse SendMailTool when reminders are requested.\n\n---\n\n# IMPORTANT RULES\n\nDO:\n\n- Use the correct tool\n- Confirm schedules before creating them\n- Read tests before grading\n- Generate comprehensive notes\n- Give objective feedback\n- Track progress\n- Use RFC3339 date format\n- Follow tool routing rules exactly\n\nDO NOT:\n\n- Call GetEvents when user wants an event created\n- Create events without confirmation\n- Grade tests without reading answers\n- Create incomplete notes\n- Use the wrong tool\n- Modify events using CreateEvents\n- Create events using GetEvents\n\n---\n\n# TOOL PRIORITY\n\nEvent Creation Request\n→ CreateEvents\n\nAvailability Request\n→ GetEvents\n\nEvent Modification Request\n→ UpdateEvent\n\nDocument Creation Request\n→ CreateDocs\n\nDocument Update Request\n→ UpdateDocs\n\nDocument Reading Request\n→ GetDocs\n\nRoadmap Request\n→ GetMailTool\n\nReminder Request\n→ SendMailTool\n\nThese routing rules override all other instructions.",
+          "enableStreaming": true
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        288,
+        -32
+      ],
+      "id": "0e2f0c5e-0504-4226-a5ce-88329bf5dafb",
+      "name": "Chat Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        -192,
+        144
+      ],
+      "id": "cdc16de2-9268-4806-a46a-11d26a3d8c26",
+      "name": "Chat Agent Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "e7nXzdpQue2GhPmn",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        -32,
+        176
+      ],
+      "id": "c59f61c3-cb21-485e-bb8f-fc8ff5c247b4",
+      "name": "Agent Memory"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "limit": 5,
+        "simple": false,
+        "filters": {
+          "q": "Your Personalized Learning Roadmap By PathForge"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.2,
+      "position": [
+        -96,
+        464
+      ],
+      "id": "e2b994da-a181-4552-a9e0-8b4e8877256e",
+      "name": "GetMailTool",
+      "webhookId": "92388383-4ac8-4bee-9391-ccdf0ed9b32a",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "22Vw0m7Bqt5RqLNh",
+          "name": "Gmail OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('To', ``, 'string') }}",
+        "subject": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Subject', ``, 'string') }}",
+        "message": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message', ``, 'string') }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.2,
+      "position": [
+        48,
+        464
+      ],
+      "id": "42d97386-2bae-4ba4-8be3-f191056faba3",
+      "name": "SendMailTool",
+      "webhookId": "859dea51-faf1-43ed-8c15-134f9782d5b5",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "22Vw0m7Bqt5RqLNh",
+          "name": "Gmail OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Gmail Tools\n- Read roadmap from the gmail\n- Send Alerts",
+        "height": 272,
+        "width": 336,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -144,
+        336
+      ],
+      "typeVersion": 1,
+      "id": "721665a7-c743-460f-8b61-e7a40c20b1d2",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## Calendar Tools\n- Read the events from the calendar\n- Set the event on the calendar based on user request\n- Update the events if changes are needed",
+        "height": 304,
+        "width": 400,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        208,
+        336
+      ],
+      "typeVersion": 1,
+      "id": "24f68938-4a6e-48a1-afeb-37705b1e78b4",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Calendar', ``, 'string') }}",
+          "mode": "id",
+          "__regex": "(^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*)"
+        },
+        "returnAll": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Return_All', ``, 'boolean') }}",
+        "limit": 5,
+        "timeMin": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('After', ``, 'string') }}",
+        "timeMax": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Before', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        240,
+        480
+      ],
+      "id": "15cd5029-3c9a-4200-afcf-bb7b6fe4079f",
+      "name": "GetEvents",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "QPjV7TkbZY08vDOx",
+          "name": "Google Calendar OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "calendar": {
+          "__rl": true,
+          "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Calendar', ``, 'string') }}",
+          "mode": "id",
+          "__regex": "(^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*)"
+        },
+        "start": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Start', ``, 'string') }}",
+        "end": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('End', ``, 'string') }}",
+        "useDefaultReminders": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Use_Default_Reminders', ``, 'boolean') }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        368,
+        480
+      ],
+      "id": "aa7db645-8d9d-4a12-b9d8-37a39faa4724",
+      "name": "CreateEvents",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "QPjV7TkbZY08vDOx",
+          "name": "Google Calendar OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "calendar": {
+          "__rl": true,
+          "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Calendar', ``, 'string') }}",
+          "mode": "id",
+          "__regex": "(^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*)"
+        },
+        "eventId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Event_ID', ``, 'string') }}",
+        "useDefaultReminders": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Use_Default_Reminders', ``, 'boolean') }}",
+        "updateFields": {}
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        496,
+        480
+      ],
+      "id": "7bf700fd-1037-4364-970e-5bed2d2de79c",
+      "name": "UpdateEvent",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "QPjV7TkbZY08vDOx",
+          "name": "Google Calendar OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Google Docs Tools\n- Create the documentations\n- Update the documentations\n- Read the documentations ",
+        "height": 288,
+        "width": 432,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        640,
+        336
+      ],
+      "typeVersion": 1,
+      "id": "50706e23-91cb-46f3-88a7-795bb3088e3b",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "folderId": "default",
+        "title": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Title', ``, 'string') }}"
+      },
+      "type": "n8n-nodes-base.googleDocsTool",
+      "typeVersion": 2,
+      "position": [
+        688,
+        480
+      ],
+      "id": "63cd2da8-da25-44a6-a05d-5455fe2a8fdc",
+      "name": "CreateDocs",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "2UkH07l3yrw5w7Ps",
+          "name": "Google Docs OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentURL": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Doc_ID_or_URL', ``, 'string') }}",
+        "simple": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Simplify', ``, 'boolean') }}",
+        "actionsUi": {
+          "actionFields": [
+            {
+              "action": "insert",
+              "text": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('actionFields0_Text', ``, 'string') }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.googleDocsTool",
+      "typeVersion": 2,
+      "position": [
+        832,
+        480
+      ],
+      "id": "d54f5853-e132-4e48-a427-fc52b1991b9e",
+      "name": "UpdateDocs",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "2UkH07l3yrw5w7Ps",
+          "name": "Google Docs OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "documentURL": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Doc_ID_or_URL', ``, 'string') }}"
+      },
+      "type": "n8n-nodes-base.googleDocsTool",
+      "typeVersion": 2,
+      "position": [
+        960,
+        480
+      ],
+      "id": "1a887ea7-8357-48f0-8810-aa0e9f4f8f54",
+      "name": "GetDocs",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "2UkH07l3yrw5w7Ps",
+          "name": "Google Docs OAuth2 API"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Chat Trigger": {
+      "main": [
+        [
+          {
+            "node": "Chat Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Chat Agent Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Chat Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agent Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Chat Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GetMailTool": {
+      "ai_tool": [
+        [
+          {
+            "node": "Chat Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SendMailTool": {
+      "ai_tool": [
+        [
+          {
+            "node": "Chat Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GetEvents": {
+      "ai_tool": [
+        [
+          {
+            "node": "Chat Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CreateEvents": {
+      "ai_tool": [
+        [
+          {
+            "node": "Chat Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "UpdateEvent": {
+      "ai_tool": [
+        [
+          {
+            "node": "Chat Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CreateDocs": {
+      "ai_tool": [
+        [
+          {
+            "node": "Chat Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "UpdateDocs": {
+      "ai_tool": [
+        [
+          {
+            "node": "Chat Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GetDocs": {
+      "ai_tool": [
+        [
+          {
+            "node": "Chat Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "timeSavedMode": "fixed",
+    "timezone": "Asia/Kolkata",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "versionId": "d1eddac0-5f0a-4963-a786-c7157e65807b",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "ee9ce73cf881770abb4168e695f5e8bbd14fe651482cc91d69c9e5a5b59e3ca4"
+  },
+  "id": "qqB2Qr0YVyRmPAwA",
+  "tags": []
+}
