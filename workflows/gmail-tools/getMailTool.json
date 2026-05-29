@@ -1,1 +1,42 @@
-
+{
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "getAll",
+        "limit": 5,
+        "simple": false,
+        "filters": {
+          "q": "Your Personalized Learning Roadmap By PathForge"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.2,
+      "position": [
+        -96,
+        464
+      ],
+      "id": "e2b994da-a181-4552-a9e0-8b4e8877256e",
+      "name": "GetMailTool",
+      "webhookId": "92388383-4ac8-4bee-9391-ccdf0ed9b32a",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "22Vw0m7Bqt5RqLNh",
+          "name": "Gmail OAuth2 API"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "GetMailTool": {
+      "ai_tool": [
+        []
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "ee9ce73cf881770abb4168e695f5e8bbd14fe651482cc91d69c9e5a5b59e3ca4"
+  }
+}
