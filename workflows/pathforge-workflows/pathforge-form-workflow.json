@@ -1,1 +1,224 @@
-
+{
+  "name": "AI Coach-Form",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "PathForge AI ",
+        "formDescription": "Get your personalized roadmap in just some clicks, tell us what you want to learn, and we will create a personalized learning path.",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Email_ID",
+              "fieldType": "email",
+              "placeholder": "Enter your Email ID",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Roadmap_Subject",
+              "placeholder": "Topic for roadmap",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Current_Level_of_Proficiency",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Beginner"
+                  },
+                  {
+                    "option": "Intermediate"
+                  },
+                  {
+                    "option": "Advanced"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Time_Commitment_(Hrs/Day)",
+              "fieldType": "number",
+              "placeholder": "Time you can commit to learn",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Duration_(Weeks)",
+              "fieldType": "number",
+              "placeholder": "Roadmap Length",
+              "requiredField": true
+            }
+          ]
+        },
+        "responseMode": "lastNode",
+        "options": {
+          "appendAttribution": false,
+          "buttonLabel": "Generate Roadmap",
+          "respondWithOptions": {
+            "values": {
+              "formSubmittedText": "Your Roadmap has been generated, please check your email."
+            }
+          },
+          "customCss": ":root {\n\t/* Typography */\n\t--font-family: 'Inter', system-ui, -apple-system, sans-serif;\n\n\t--font-weight-normal: 400;\n\t--font-weight-medium: 500;\n\t--font-weight-bold: 650; /* Slightly heavier for modern punchy headers */\n\n\t--font-size-body: 14px;\n\t--font-size-label: 14px;\n\t--font-size-input: 15px;\n\t--font-size-header: 32px;\n\t--font-size-subheader: 16px;\n\t--font-size-paragraph: 15px;\n\n\t/* Background */\n\t--color-background: #0b0f17; /* Deeper, premium midnight canvas */\n\n\t/* Cards */\n\t--color-card-bg: #131a26;\n\t--color-card-border: rgba(255, 255, 255, 0.06); /* Sophisticated translucent border */\n\t--color-card-shadow: rgba(0, 0, 0, 0.4);\n\n\t/* Text */\n\t--color-header: #f8fafc;\n\t--color-header-subtext: #94a3b8;\n\t--color-label: #cbd5e1;\n\t--color-html-text: #94a3b8;\n\n\t/* Inputs */\n\t--color-input-bg: #090d14;\n\t--color-input-border: rgba(255, 255, 255, 0.1);\n\t--color-input-text: #f8fafc;\n\t--color-focus-border: #a78bfa;\n\t--color-focus-ring: rgba(139, 92, 246, 0.25);\n\n\t/* Buttons */\n\t--color-submit-btn-bg-start: #7c3aed;\n\t--color-submit-btn-bg-end: #6d28d9;\n\t--color-submit-btn-text: #ffffff;\n\n\t/* Links */\n\t--color-link: #a78bfa;\n\t--color-html-link: #c084fc;\n\n\t/* Validation & States */\n\t--color-error: #f87171;\n\t--color-required: #fb923c;\n\n\t/* Notice (Softer, less jarring amber tones) */\n\t--color-test-notice-text: #fde047;\n\t--color-test-notice-bg: rgba(251, 191, 36, 0.06);\n\t--color-test-notice-border: rgba(251, 191, 36, 0.2);\n\n\t/* Misc */\n\t--color-clear-button-bg: #334155;\n\n\t/* Radius (Smoother, more modern rounding) */\n\t--border-radius-card: 24px;\n\t--border-radius-input: 14px;\n\t--border-radius-clear-btn: 50%;\n\n\t/* Layout */\n\t--container-width: 540px;\n\t--padding-container-top: 56px;\n\t--padding-card: 40px; /* More breathing room */\n\t--padding-form-input: 16px;\n\t--margin-bottom-card: 28px;\n\n\t/* Button */\n\t--submit-btn-height: 56px;\n\n\t/* Effects */\n\t--box-shadow-card: 0 20px 40px -15px rgba(0, 0, 0, 0.5);\n\t--opacity-placeholder: 0.5;\n\t--transition-smooth: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);\n}\n\n/* Global Dynamic Elements */\n\ninput,\ntextarea,\nselect {\n\tbackground-color: var(--color-input-bg) !important;\n\tcolor: var(--color-input-text) !important;\n\tborder: 1px solid var(--color-input-border) !important;\n\tborder-radius: var(--border-radius-input) !important;\n\tpadding: var(--padding-form-input) !important;\n\tfont-family: var(--font-family);\n\tfont-size: var(--font-size-input);\n\ttransition: var(--transition-smooth) !important;\n}\n\ninput::placeholder,\ntextarea::placeholder {\n\tcolor: var(--color-header-subtext) !important;\n\topacity: var(--opacity-placeholder) !important;\n}\n\ninput:focus,\ntextarea:focus,\nselect:focus {\n\toutline: none !important;\n\tborder-color: var(--color-focus-border) !important;\n\tbox-shadow: 0 0 0 4px var(--color-focus-ring) !important;\n}\n\nbutton {\n\tbackground: linear-gradient(\n\t\t135deg,\n\t\tvar(--color-submit-btn-bg-start),\n\t\tvar(--color-submit-btn-bg-end)\n\t) !important;\n\tcolor: var(--color-submit-btn-text) !important;\n\tfont-family: var(--font-family);\n\tfont-weight: var(--font-weight-bold);\n\tborder: none !important;\n\tborder-radius: var(--border-radius-input) !important; /* Matches input radius for UI harmony */\n\theight: var(--submit-btn-height);\n\tcursor: pointer;\n\tbox-shadow: 0 4px 12px rgba(124, 58, 237, 0.25);\n\ttransition: var(--transition-smooth);\n}\n\nbutton:hover {\n\tfilter: brightness(1.12);\n\ttransform: translateY(-1px);\n\tbox-shadow: 0 6px 20px rgba(124, 58, 237, 0.35);\n}\n\nbutton:active {\n\ttransform: translateY(0);\n\tfilter: brightness(0.95);\n}"
+        }
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.5,
+      "position": [
+        0,
+        0
+      ],
+      "id": "ca0ab43a-e3e5-438c-b815-a170e2902800",
+      "name": "On form submission",
+      "webhookId": "f2a2bc03-944a-4441-ac22-38c66bfc438b"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are an expert AI Learning Coach.\n\nCreate a personalized, practical, and structured learning roadmap based on the user's goal, skill level, available time, and duration.\n\nUSER INPUT:\n- Topic: {{ $json.Roadmap_Subject }}\n- Current Level: {{ $json.Current_Level_of_Proficiency }}\n- Daily Time Available: {{ $json['Time_Commitment_(Hrs/Day)'] }} Hrs/Day\n- Total Duration: {{ $json['Duration_(Weeks)'] }} Weeks\n\nOUTPUT FORMAT:\n\n# Learning Overview\nWrite a concise 2-3 sentence overview explaining:\n- what the learner will achieve\n- how the roadmap is structured\n- expected outcome by completion\n\n# Phase 1: Foundations\nInclude:\n- 6-8 beginner topics\n- learning priorities\n- daily study structure\n- mini practice tasks\n- 3 milestone checkpoints\n\n# Phase 2: Applied Learning\nInclude:\n- 6-8 intermediate topics\n- hands-on exercises\n- practical implementation tasks\n- project suggestions\n- 3 milestone checkpoints\n\n# Phase 3: Advanced Mastery\nInclude:\n- 6-8 advanced topics\n- real-world applications\n- portfolio-level projects\n- optimization/best practices\n- 3 milestone checkpoints\n\n# Weekly Study Structure\nProvide a realistic weekly breakdown including:\n- learning\n- practice\n- revision\n- project work\n\n# Recommended Resources\nSuggest:\n- official documentation\n- YouTube channels\n- courses\n- books\n- practice platforms\n- communities\n\nPrefer high-quality free resources when possible.\n\n# Capstone Project\nSuggest 1 strong resume-worthy project based on the roadmap.\n\n# Pro Tips\nProvide 5 concise practical tips for:\n- consistency\n- faster learning\n- avoiding burnout\n- improving retention\n- staying disciplined\n\n# Chatbot Link\nEmbed this chatbot link with title \"PathForge AI Chatbot\" and write a message \"Click on the chatbot link to know more about the roadmap and streamline your learning journey.\"\n\nhttps://aryansingh0189.app.n8n.cloud/webhook/e4938905-4ac2-4bd3-982a-92646a5bd0ca/chat\n\nIMPORTANT RULES:\n- Keep the roadmap practical and execution-focused\n- Avoid generic motivational advice\n- Prioritize industry-relevant skills\n- Structure content in clean markdown\n- Be concise but detailed\n- Tailor difficulty according to the user's level\n- Focus on real-world applicability",
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        208,
+        0
+      ],
+      "id": "69c35a5a-a001-4d06-b836-c90c1f3cebe0",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1-mini"
+        },
+        "builtInTools": {},
+        "options": {
+          "maxTokens": 2000,
+          "temperature": 0.5
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        208,
+        176
+      ],
+      "id": "455ed903-0b4f-4ecd-803d-759301beb59c",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "e7nXzdpQue2GhPmn",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const markdown = $input.first().json.text || \"\";\n\n// Convert escaped newlines into real newlines\nconst cleanedMarkdown = markdown\n    .replace(/\\\\n/g, '\\n')\n    .replace(/\\\\\"/g, '\"');\n\nfunction mdToHtml(md) {\n    return md\n\n        // Headers\n        .replace(/^### (.*$)/gim, '<h3>$1</h3>')\n        .replace(/^## (.*$)/gim, '<h2>$1</h2>')\n        .replace(/^# (.*$)/gim, '<h1>$1</h1>')\n\n        // Bold\n        .replace(/\\*\\*(.*?)\\*\\*/gim, '<strong>$1</strong>')\n\n        // Italic\n        .replace(/\\*(.*?)\\*/gim, '<em>$1</em>')\n\n        // Code Blocks\n        .replace(/```([\\s\\S]*?)```/gim, '<pre><code>$1</code></pre>')\n\n        // Inline Code\n        .replace(/`([^`]+)`/gim, '<code>$1</code>')\n\n        // Blockquotes\n        .replace(/^> (.*$)/gim, '<blockquote>$1</blockquote>')\n\n        // Horizontal Rule\n        .replace(/^---$/gim, '<hr>')\n\n        // Images\n        .replace(/!\\[(.*?)\\]\\((.*?)\\)/gim, '<img alt=\"$1\" src=\"$2\" />')\n\n        // Links\n        .replace(/\\[(.*?)\\]\\((.*?)\\)/gim, '<a href=\"$2\">$1</a>')\n\n        // Unordered Lists\n        .replace(/^\\s*-\\s+(.*)$/gim, '<li>$1</li>')\n\n        // Ordered Lists\n        .replace(/^\\s*\\d+\\.\\s+(.*)$/gim, '<li>$1</li>')\n\n        // Wrap list items in <ul>\n        .replace(/(<li>.*<\\/li>)/gims, '<ul>$1</ul>')\n\n        // Paragraph spacing\n        .replace(/\\n{2,}/g, '</p><p>')\n\n        // Single line breaks\n        .replace(/\\n/g, '<br>');\n}\n\nconst convertedHtml = mdToHtml(cleanedMarkdown);\n\nconst html = `\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n\n<title>Rendered Markdown</title>\n\n<style>\nbody{\n    font-family: Arial, sans-serif;\n    line-height: 1.7;\n    max-width: 900px;\n    margin: auto;\n    padding: 40px;\n    color: #222;\n    background: #ffffff;\n}\n\nh1,h2,h3{\n    color: #111;\n    margin-top: 30px;\n}\n\np{\n    margin-bottom: 16px;\n}\n\npre{\n    background: #1e1e1e;\n    color: white;\n    padding: 16px;\n    border-radius: 8px;\n    overflow-x: auto;\n}\n\ncode{\n    background: #f4f4f4;\n    padding: 2px 6px;\n    border-radius: 4px;\n}\n\nblockquote{\n    border-left: 4px solid #ccc;\n    padding-left: 12px;\n    color: #555;\n    margin: 20px 0;\n}\n\nul{\n    padding-left: 20px;\n}\n\nli{\n    margin-bottom: 8px;\n}\n\na{\n    color: #0066cc;\n    text-decoration: none;\n}\n\nimg{\n    max-width: 100%;\n    border-radius: 8px;\n    margin-top: 10px;\n}\n\nhr{\n    margin: 30px 0;\n}\n</style>\n</head>\n\n<body>\n<p>${convertedHtml}</p>\n</body>\n</html>\n`;\n\nreturn [\n  {\n    json: {\n      html: html,\n      markdown: cleanedMarkdown\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        560,
+        0
+      ],
+      "id": "5e342006-daa5-4c69-a417-c36b9f3dac76",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('On form submission').last().json.Email_ID }}",
+        "subject": "=Your Personalized Learning Roadmap By PathForge: {{ $('On form submission').first().json.Roadmap_Subject }}",
+        "message": "={{ $json.html }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        768,
+        0
+      ],
+      "id": "917e43e1-e7a2-4b45-9f26-06c71e6b6a8f",
+      "name": "Send a message",
+      "webhookId": "a32d6dc9-f314-4ffd-b1fa-68057ac38e7c",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "22Vw0m7Bqt5RqLNh",
+          "name": "Gmail OAuth2 API"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "timeSavedMode": "fixed",
+    "timezone": "Asia/Kolkata",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "versionId": "e4c91880-eabb-461e-93e3-26bf8f083957",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "ee9ce73cf881770abb4168e695f5e8bbd14fe651482cc91d69c9e5a5b59e3ca4"
+  },
+  "id": "MFl7XxGPwZnDlr9H",
+  "tags": []
+}
