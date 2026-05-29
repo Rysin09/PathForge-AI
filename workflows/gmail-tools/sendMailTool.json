@@ -1,1 +1,41 @@
-
+{
+  "nodes": [
+    {
+      "parameters": {
+        "sendTo": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('To', ``, 'string') }}",
+        "subject": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Subject', ``, 'string') }}",
+        "message": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message', ``, 'string') }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.2,
+      "position": [
+        48,
+        464
+      ],
+      "id": "42d97386-2bae-4ba4-8be3-f191056faba3",
+      "name": "SendMailTool",
+      "webhookId": "859dea51-faf1-43ed-8c15-134f9782d5b5",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "22Vw0m7Bqt5RqLNh",
+          "name": "Gmail OAuth2 API"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "SendMailTool": {
+      "ai_tool": [
+        []
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "ee9ce73cf881770abb4168e695f5e8bbd14fe651482cc91d69c9e5a5b59e3ca4"
+  }
+}
