@@ -1,1 +1,44 @@
-
+{
+  "nodes": [
+    {
+      "parameters": {
+        "calendar": {
+          "__rl": true,
+          "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Calendar', ``, 'string') }}",
+          "mode": "id",
+          "__regex": "(^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*)"
+        },
+        "start": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Start', ``, 'string') }}",
+        "end": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('End', ``, 'string') }}",
+        "useDefaultReminders": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Use_Default_Reminders', ``, 'boolean') }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        368,
+        480
+      ],
+      "id": "aa7db645-8d9d-4a12-b9d8-37a39faa4724",
+      "name": "CreateEvents",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "QPjV7TkbZY08vDOx",
+          "name": "Google Calendar OAuth2 API"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "CreateEvents": {
+      "ai_tool": [
+        []
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "ee9ce73cf881770abb4168e695f5e8bbd14fe651482cc91d69c9e5a5b59e3ca4"
+  }
+}
