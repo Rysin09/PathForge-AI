@@ -1,1 +1,36 @@
-
+{
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "get",
+        "documentURL": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Doc_ID_or_URL', ``, 'string') }}"
+      },
+      "type": "n8n-nodes-base.googleDocsTool",
+      "typeVersion": 2,
+      "position": [
+        960,
+        480
+      ],
+      "id": "1a887ea7-8357-48f0-8810-aa0e9f4f8f54",
+      "name": "GetDocs",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "2UkH07l3yrw5w7Ps",
+          "name": "Google Docs OAuth2 API"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "GetDocs": {
+      "ai_tool": [
+        []
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "ee9ce73cf881770abb4168e695f5e8bbd14fe651482cc91d69c9e5a5b59e3ca4"
+  }
+}
