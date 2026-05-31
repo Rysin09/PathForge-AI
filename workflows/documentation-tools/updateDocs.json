@@ -1,1 +1,45 @@
-
+{
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "update",
+        "documentURL": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Doc_ID_or_URL', ``, 'string') }}",
+        "simple": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Simplify', ``, 'boolean') }}",
+        "actionsUi": {
+          "actionFields": [
+            {
+              "action": "insert",
+              "text": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('actionFields0_Text', ``, 'string') }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.googleDocsTool",
+      "typeVersion": 2,
+      "position": [
+        832,
+        480
+      ],
+      "id": "d54f5853-e132-4e48-a427-fc52b1991b9e",
+      "name": "UpdateDocs",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "2UkH07l3yrw5w7Ps",
+          "name": "Google Docs OAuth2 API"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "UpdateDocs": {
+      "ai_tool": [
+        []
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "ee9ce73cf881770abb4168e695f5e8bbd14fe651482cc91d69c9e5a5b59e3ca4"
+  }
+}
