@@ -1,1 +1,36 @@
-
+{
+  "nodes": [
+    {
+      "parameters": {
+        "folderId": "default",
+        "title": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Title', ``, 'string') }}"
+      },
+      "type": "n8n-nodes-base.googleDocsTool",
+      "typeVersion": 2,
+      "position": [
+        688,
+        480
+      ],
+      "id": "63cd2da8-da25-44a6-a05d-5455fe2a8fdc",
+      "name": "CreateDocs",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "2UkH07l3yrw5w7Ps",
+          "name": "Google Docs OAuth2 API"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "CreateDocs": {
+      "ai_tool": [
+        []
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "ee9ce73cf881770abb4168e695f5e8bbd14fe651482cc91d69c9e5a5b59e3ca4"
+  }
+}
